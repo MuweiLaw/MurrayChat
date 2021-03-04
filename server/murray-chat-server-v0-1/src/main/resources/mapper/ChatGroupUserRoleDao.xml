@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.murray.dao.ChatGroupUserRoleDao">
+    <resultMap id="BaseResultMap" type="com.murray.entity.ChatGroupUserRole">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_no" jdbcType="CHAR" property="userNo"/>
+        <result column="group_no" jdbcType="CHAR" property="groupNo"/>
+        <result column="role" jdbcType="TINYINT" property="role"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="update_date" jdbcType="TIMESTAMP" property="updateDate"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, user_no, group_no, `role`, create_date, update_date
+  </sql>
+    <select id="selectByExample" parameterType="com.murray.entity.example.ChatGroupUserRoleExample"
+            resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from chat_group_user_role
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from chat_group_user_role
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from chat_group_user_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.murray.entity.example.ChatGroupUserRoleExample">
+        delete from chat_group_user_role
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.murray.entity.ChatGroupUserRole"
+            useGeneratedKeys="true">
+    insert into chat_group_user_role (user_no, group_no, `role`, 
+      create_date, update_date)
+    values (#{userNo,jdbcType=CHAR}, #{groupNo,jdbcType=CHAR}, #{role,jdbcType=TINYINT}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.murray.entity.ChatGroupUserRole"
+            useGeneratedKeys="true">
+        insert into chat_group_user_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userNo != null">
+                user_no,
+            </if>
+            <if test="groupNo != null">
+                group_no,
+            </if>
+            <if test="role != null">
+                `role`,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userNo != null">
+                #{userNo,jdbcType=CHAR},
+            </if>
+            <if test="groupNo != null">
+                #{groupNo,jdbcType=CHAR},
+            </if>
+            <if test="role != null">
+                #{role,jdbcType=TINYINT},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.murray.entity.example.ChatGroupUserRoleExample"
+            resultType="java.lang.Long">
+        select count(*) from chat_group_user_role
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update chat_group_user_role
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.userNo != null">
+                user_no = #{record.userNo,jdbcType=CHAR},
+            </if>
+            <if test="record.groupNo != null">
+                group_no = #{record.groupNo,jdbcType=CHAR},
+            </if>
+            <if test="record.role != null">
+                `role` = #{record.role,jdbcType=TINYINT},
+            </if>
+            <if test="record.createDate != null">
+                create_date = #{record.createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateDate != null">
+                update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update chat_group_user_role
+        set id = #{record.id,jdbcType=BIGINT},
+        user_no = #{record.userNo,jdbcType=CHAR},
+        group_no = #{record.groupNo,jdbcType=CHAR},
+        `role` = #{record.role,jdbcType=TINYINT},
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.murray.entity.ChatGroupUserRole">
+        update chat_group_user_role
+        <set>
+            <if test="userNo != null">
+                user_no = #{userNo,jdbcType=CHAR},
+            </if>
+            <if test="groupNo != null">
+                group_no = #{groupNo,jdbcType=CHAR},
+            </if>
+            <if test="role != null">
+                `role` = #{role,jdbcType=TINYINT},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.murray.entity.ChatGroupUserRole">
+    update chat_group_user_role
+    set user_no = #{userNo,jdbcType=CHAR},
+      group_no = #{groupNo,jdbcType=CHAR},
+      `role` = #{role,jdbcType=TINYINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <insert id="insertList" parameterType="java.util.List">
+        insert into chat_group_user_role(
+        <include refid="Base_Column_List"/>
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id},
+            #{item.userNo},
+            #{item.groupNo},
+            #{item.role},
+            #{item.createDate},
+            #{item.updateDate}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectBasicAll" resultMap="BaseResultMap">
+    select user_no, group_no
+    from chat_group_user_role
+  </select>
+
+    <select id="selectUserNoByGroupNo" parameterType="java.lang.String" resultType="String">
+    select user_no
+    from chat_group_user_role
+    where group_no = #{groupNo,jdbcType=CHAR}
+  </select>
+</mapper>

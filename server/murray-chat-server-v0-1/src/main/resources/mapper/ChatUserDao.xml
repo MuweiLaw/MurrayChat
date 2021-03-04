@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.murray.dao.ChatUserDao">
+  <resultMap id="BaseResultMap" type="com.murray.entity.ChatUser">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="chat_user_no" jdbcType="CHAR" property="chatUserNo" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="signature" jdbcType="VARCHAR" property="signature" />
+    <result column="avatar_address" jdbcType="VARCHAR" property="avatarAddress" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, chat_user_no, `name`, `password`, age, birthday, signature, avatar_address, create_date, 
+    update_date
+  </sql>
+  <select id="selectByExample" parameterType="com.murray.entity.example.ChatUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from chat_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from chat_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from chat_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.murray.entity.example.ChatUserExample">
+    delete from chat_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.murray.entity.ChatUser" useGeneratedKeys="true">
+    insert into chat_user (chat_user_no, `name`, `password`, 
+      age, birthday, signature, 
+      avatar_address, create_date, update_date
+      )
+    values (#{chatUserNo,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{age,jdbcType=INTEGER}, #{birthday,jdbcType=TIMESTAMP}, #{signature,jdbcType=VARCHAR}, 
+      #{avatarAddress,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.murray.entity.ChatUser" useGeneratedKeys="true">
+    insert into chat_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="chatUserNo != null">
+        chat_user_no,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="password != null">
+        `password`,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="signature != null">
+        signature,
+      </if>
+      <if test="avatarAddress != null">
+        avatar_address,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="chatUserNo != null">
+        #{chatUserNo,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signature != null">
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarAddress != null">
+        #{avatarAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.murray.entity.example.ChatUserExample" resultType="java.lang.Long">
+    select count(*) from chat_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update chat_user
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.chatUserNo != null">
+        chat_user_no = #{record.chatUserNo,jdbcType=CHAR},
+      </if>
+      <if test="record.name != null">
+        `name` = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        `password` = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null">
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.signature != null">
+        signature = #{record.signature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatarAddress != null">
+        avatar_address = #{record.avatarAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update chat_user
+    set id = #{record.id,jdbcType=BIGINT},
+      chat_user_no = #{record.chatUserNo,jdbcType=CHAR},
+      `name` = #{record.name,jdbcType=VARCHAR},
+      `password` = #{record.password,jdbcType=VARCHAR},
+      age = #{record.age,jdbcType=INTEGER},
+      birthday = #{record.birthday,jdbcType=TIMESTAMP},
+      signature = #{record.signature,jdbcType=VARCHAR},
+      avatar_address = #{record.avatarAddress,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.murray.entity.ChatUser">
+    update chat_user
+    <set>
+      <if test="chatUserNo != null">
+        chat_user_no = #{chatUserNo,jdbcType=CHAR},
+      </if>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        `password` = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signature != null">
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarAddress != null">
+        avatar_address = #{avatarAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.murray.entity.ChatUser">
+    update chat_user
+    set chat_user_no = #{chatUserNo,jdbcType=CHAR},
+      `name` = #{name,jdbcType=VARCHAR},
+      `password` = #{password,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      signature = #{signature,jdbcType=VARCHAR},
+      avatar_address = #{avatarAddress,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
