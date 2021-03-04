@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.murray.dao.ChatUserInfoDao">
+  <resultMap id="BaseResultMap" type="com.murray.entity.ChatUserInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_no" jdbcType="CHAR" property="userNo" />
+    <result column="phone" jdbcType="CHAR" property="phone" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="mail_auth" jdbcType="VARCHAR" property="mailAuth" />
+    <result column="company_rank" jdbcType="VARCHAR" property="companyRank" />
+    <result column="avatar_type" jdbcType="CHAR" property="avatarType" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_no, phone, mail, mail_auth, company_rank, avatar_type, company, create_time, 
+    update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.murray.entity.example.ChatUserInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from chat_user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from chat_user_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from chat_user_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.murray.entity.example.ChatUserInfoExample">
+    delete from chat_user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.murray.entity.ChatUserInfo" useGeneratedKeys="true">
+    insert into chat_user_info (user_no, phone, mail, 
+      mail_auth, company_rank, avatar_type, 
+      company, create_time, update_time
+      )
+    values (#{userNo,jdbcType=CHAR}, #{phone,jdbcType=CHAR}, #{mail,jdbcType=VARCHAR}, 
+      #{mailAuth,jdbcType=VARCHAR}, #{companyRank,jdbcType=VARCHAR}, #{avatarType,jdbcType=CHAR}, 
+      #{company,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.murray.entity.ChatUserInfo" useGeneratedKeys="true">
+    insert into chat_user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userNo != null">
+        user_no,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="mail != null">
+        mail,
+      </if>
+      <if test="mailAuth != null">
+        mail_auth,
+      </if>
+      <if test="companyRank != null">
+        company_rank,
+      </if>
+      <if test="avatarType != null">
+        avatar_type,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userNo != null">
+        #{userNo,jdbcType=CHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=CHAR},
+      </if>
+      <if test="mail != null">
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="mailAuth != null">
+        #{mailAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="companyRank != null">
+        #{companyRank,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarType != null">
+        #{avatarType,jdbcType=CHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.murray.entity.example.ChatUserInfoExample" resultType="java.lang.Long">
+    select count(*) from chat_user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update chat_user_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userNo != null">
+        user_no = #{record.userNo,jdbcType=CHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=CHAR},
+      </if>
+      <if test="record.mail != null">
+        mail = #{record.mail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mailAuth != null">
+        mail_auth = #{record.mailAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyRank != null">
+        company_rank = #{record.companyRank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatarType != null">
+        avatar_type = #{record.avatarType,jdbcType=CHAR},
+      </if>
+      <if test="record.company != null">
+        company = #{record.company,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update chat_user_info
+    set id = #{record.id,jdbcType=BIGINT},
+      user_no = #{record.userNo,jdbcType=CHAR},
+      phone = #{record.phone,jdbcType=CHAR},
+      mail = #{record.mail,jdbcType=VARCHAR},
+      mail_auth = #{record.mailAuth,jdbcType=VARCHAR},
+      company_rank = #{record.companyRank,jdbcType=VARCHAR},
+      avatar_type = #{record.avatarType,jdbcType=CHAR},
+      company = #{record.company,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.murray.entity.ChatUserInfo">
+    update chat_user_info
+    <set>
+      <if test="userNo != null">
+        user_no = #{userNo,jdbcType=CHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=CHAR},
+      </if>
+      <if test="mail != null">
+        mail = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="mailAuth != null">
+        mail_auth = #{mailAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="companyRank != null">
+        company_rank = #{companyRank,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarType != null">
+        avatar_type = #{avatarType,jdbcType=CHAR},
+      </if>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.murray.entity.ChatUserInfo">
+    update chat_user_info
+    set user_no = #{userNo,jdbcType=CHAR},
+      phone = #{phone,jdbcType=CHAR},
+      mail = #{mail,jdbcType=VARCHAR},
+      mail_auth = #{mailAuth,jdbcType=VARCHAR},
+      company_rank = #{companyRank,jdbcType=VARCHAR},
+      avatar_type = #{avatarType,jdbcType=CHAR},
+      company = #{company,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
